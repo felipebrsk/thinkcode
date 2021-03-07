@@ -9,7 +9,7 @@ Content Table
    * [Features](#features)
    * [Installation](#instalacao)
    * [Status](#status)
-   * [Geral](#visao)
+   * [ScreenShots](#visao)
 <!--te-->
 
 <a name="tecnologias">**Tecnologies used**</a>
@@ -35,12 +35,12 @@ Content Table
 - Voyager integration (http://127.0.0.1/admin/)
 
 
-<a name="instalacao">**Installation**</a><br>
+<a name="instalacao">**Installation**</a><br/>
 - Clone the repository<br>
 ```
 $ git clone https://github.com/felipebrsk/thinkcode
 ```
-- Switch to the repo folder<br>
+- Switch to the repo folder<br/>
 ```
 $ cd thinkcode
 ```
@@ -48,7 +48,7 @@ $ cd thinkcode
 ```
 $ composer install
 ```
-- Install the npm dependencies<br>
+- Install the npm dependencies<br/>
 ```
 $ npm install && npm run dev
 ```
@@ -56,7 +56,7 @@ $ npm install && npm run dev
 ```
 $ cp .env.example .env
 ```
-- Generate a new application key<br>
+- Generate a new application key<br/>
 ```
 $ php artisan key:generate
 ```
@@ -64,16 +64,16 @@ $ php artisan key:generate
 ```
 $ php artisan migrate
 ```
-- Start the local development server<br>
+- Start the local development server<br/>
 ```
 $ php artisan serve
 ```
-- To give a admin permission, set<br>
+- To give a admin permission, set<br/>
 ```
 $ php artisan voyager:admin your@email.com
 ```
 You can access in http://127.0.0.1:8000/home
-<br>
+<br/>
 
 <a name="status">**Status**</a>
 <h4 align="left"> 
@@ -81,9 +81,9 @@ You can access in http://127.0.0.1:8000/home
 </h4>
 
 <a name="visao">**ScreenShots**</a>
-![WhatsApp Image 2021-03-07 at 19 41 16](https://user-images.githubusercontent.com/75860661/110257636-89889000-7f7d-11eb-9330-a284e6db81ab.jpeg)
-![WhatsApp Image 2021-03-07 at 19 42 50](https://user-images.githubusercontent.com/75860661/110257669-b2108a00-7f7d-11eb-9864-0b4b27e6539c.jpeg)
-![WhatsApp Image 2021-03-07 at 19 43 39](https://user-images.githubusercontent.com/75860661/110257673-b76dd480-7f7d-11eb-92d5-e4106b9251c7.jpeg)
+![WhatsApp Image 2021-03-07 at 19 41 16](https://user-images.githubusercontent.com/75860661/110257636-89889000-7f7d-11eb-9330-a284e6db81ab.jpeg)<br/>
+![WhatsApp Image 2021-03-07 at 19 42 50](https://user-images.githubusercontent.com/75860661/110257669-b2108a00-7f7d-11eb-9864-0b4b27e6539c.jpeg)<br/>
+![WhatsApp Image 2021-03-07 at 19 43 39](https://user-images.githubusercontent.com/75860661/110257673-b76dd480-7f7d-11eb-92d5-e4106b9251c7.jpeg)<br/>
 
 # Additional note
 The system requires a user account in the database, as routes are grouped with middleware due to working with session ids.

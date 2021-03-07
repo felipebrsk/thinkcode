@@ -72,7 +72,7 @@ $ php artisan serve
 ```
 $ php artisan voyager:admin your@email.com
 ```
-You can access in http://127.0.0.1:8000/home
+You can access in http://127.0.0.1:8000/
 <br/>
 
 <a name="status">**Status**</a>

@@ -79,5 +79,5 @@ You can access in http://127.0.0.1:8000/home
 	🚧  ThinkCode Courses Platform - Developing...  🚧
 </h4>
 
-#Additional note
+# Additional note
 The system requires a user account in the database, as routes are grouped with middleware due to working with session ids.

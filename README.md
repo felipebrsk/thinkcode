@@ -9,6 +9,7 @@ Content Table
    * [Features](#features)
    * [Installation](#instalacao)
    * [Status](#status)
+   * [Geral](#visao)
 <!--te-->
 
 <a name="tecnologias">**Tecnologies used**</a>
@@ -78,6 +79,11 @@ You can access in http://127.0.0.1:8000/home
 <h4 align="left"> 
 	🚧  ThinkCode Courses Platform - Developing...  🚧
 </h4>
+
+<a name="visao">**ScreenShots**</a>
+![WhatsApp Image 2021-03-07 at 19 41 16](https://user-images.githubusercontent.com/75860661/110257636-89889000-7f7d-11eb-9330-a284e6db81ab.jpeg)
+![WhatsApp Image 2021-03-07 at 19 42 50](https://user-images.githubusercontent.com/75860661/110257669-b2108a00-7f7d-11eb-9864-0b4b27e6539c.jpeg)
+![WhatsApp Image 2021-03-07 at 19 43 39](https://user-images.githubusercontent.com/75860661/110257673-b76dd480-7f7d-11eb-92d5-e4106b9251c7.jpeg)
 
 # Additional note
 The system requires a user account in the database, as routes are grouped with middleware due to working with session ids.

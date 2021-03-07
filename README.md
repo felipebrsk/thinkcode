@@ -1,3 +1,3 @@
 <h4 align="left"> 
-	🚧  Social Media APP - Developing...  🚧
+	🚧  ThinkCode Courses Platform - Developing...  🚧
 </h4>

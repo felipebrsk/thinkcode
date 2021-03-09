@@ -44,7 +44,7 @@ class User extends \TCG\Voyager\Models\User
 
     public function course()
     {
-        return $this->belongsToMany('App\Models\Course', 'user_courses', 'user_id', 'course_id')->withPivot(['challenge', 'chapter', 'media']);
+        return $this->belongsToMany('App\Models\Course', 'user_courses', 'user_id', 'course_id')->withPivot(['challenge', 'chapter', 'average']);
     }
 
     public function plan()

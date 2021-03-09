@@ -114,9 +114,9 @@
                     </svg>
                 </div>
                 <div>
-                    <span class="block text-2xl font-bold">{{ $users->count() }}</span>
+                    <span class="block text-2xl font-bold">{{ $users->where('role_id', '=', 2)->count() }}</span>
 
-                    @if ($users->count() == 1)
+                    @if ($users->where('role_id', '=', 2)->count() == 1)
                         <span class="block text-gray-500">Estudante</span>
                     @else
                         <span class="block text-gray-500">Estudantes</span>
@@ -247,7 +247,7 @@
                     <ul class="p-6 space-y-6">
                         @if(isset($usersMedia))
                             @foreach ($usersMedia as $userMedia)
-                                @if($userMedia->media > 9)
+                                @if($userMedia->average > 9)
                                     <li class="flex items-center">
                                         <div class="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
                                             @if (isset($userMedia->user->profile_picture))
@@ -259,7 +259,7 @@
                                             @endif
                                         </div>
                                         <span class="text-gray-600">{{ $userMedia->user->username }}</span>
-                                        <span class="ml-auto font-semibold">{{ $userMedia->media }}</span>
+                                        <span class="ml-auto font-semibold">{{ $userMedia->average }}</span>
                                     </li>
                                 @endif
                             @endforeach

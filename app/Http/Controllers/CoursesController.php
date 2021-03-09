@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
+use App\Models\Plan;
 
 class CoursesController extends Controller
 {
@@ -72,8 +73,9 @@ class CoursesController extends Controller
     public function show($id)
     {
         $findCourse = Course::find($id);
+        $plans = Plan::all();
 
-        return view('main-menu.show', compact('findCourse'));
+        return view('main-menu.show', compact('findCourse', 'plans'));
     }
 
     public function courseContent($id)

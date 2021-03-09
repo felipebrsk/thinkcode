@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-        'username',
-        'user_id',
+        'name',
         'slug',
         'stripe_plan',
-        'amount',
+        'cost',
         'description'
     ];
 

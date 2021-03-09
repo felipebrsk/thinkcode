@@ -15,7 +15,7 @@ class PlanController extends Controller
     public function index()
     {
         $plans = Plan::all();
-        return view('plans.create', compact('plans'));
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -23,8 +23,10 @@ class PlanController extends Controller
      *
      * @return mixed
      */
-    public function show(Plan $plan, Request $request)
-    {   
+    public function show($id, Request $request)
+    {
+        $plan = Plan::find($id);
+
         $paymentMethods = $request->user()->paymentMethods();
 
         $intent = $request->user()->createSetupIntent();

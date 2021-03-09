@@ -1,0 +1,15 @@
+.card-disable {
+    color: white !important;
+    padding: 12px 40px;
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+#complete-order-paypal {
+    color: white !important;
+    padding: 12px 40px;
+    &:disabled {
+        cursor: not-allowed;
+    }
+}

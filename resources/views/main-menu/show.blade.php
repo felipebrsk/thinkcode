@@ -107,6 +107,7 @@
         </div>
     </section>
 
+    @if(Auth::user()->is_subscribed != 1)
     <div class="mt-6 mb-24 flex justify-center items-center">
         <div class="">
             <div class="text-center font-semibold">
@@ -157,7 +158,7 @@
                             </span>
                         </p>
 
-                        <a href="#" class="">
+                        <a href="{{ route('plans.show', 1) }}" class="">
                             <p class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                                 <span class="font-medium">
                                     Assinar plano
@@ -231,7 +232,7 @@
                             </span>
                         </p>
 
-                        <a href="#" class="">
+                        <a href="{{ route('plans.show', 3) }}" class="">
                             <p class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                                 <span class="font-medium">
                                     Assinar plano
@@ -291,10 +292,10 @@
                             </span>
                         </p>
 
-                        <a href="#" class="">
+                        <a href="{{ route('plans.show', 2) }}" class="">
                             <p class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                                 <span class="font-medium">
-                                    <button id="checkout">Subscribe</button>
+                                    Assinar plano
                                 </span>
                                 <span class="pl-2 material-icons align-middle text-sm">
                                     east
@@ -339,6 +340,7 @@
                 class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-green-600 rounded-md bg-green-500 hover:bg-green-400">Comprar</button>
         </form>
     </div>
+    @endif
 
     {{-- Error --}}
     @if (count($errors) > 0)

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\Plan;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {   
@@ -29,6 +30,22 @@ class SubscriptionController extends Controller
                 'email' => $user->email,
             ]);
         
+        $setSub = $request->user();
+        $setSub->update(['is_subscribed' => $setSub->is_subscribed = 1]);
+        
+        //Insert into payments table
+        $payment = new Payment;
+        $payment->user_id =     Auth()->user()->id;
+        $payment->plan =        $request->plan_name;
+        $payment->amount =      $request->amount;
+        $payment->name =        $request->name;
+        $payment->email =       $request->email;
+        $payment->address =     $request->address;
+        $payment->city =        $request->city;
+        $payment->country =     $request->country;
+        $payment->CEP =        $request->CEP;
+        $payment->save();
+        
         return redirect()->route('home')->with('success', 'Your plan subscribed successfully');
     }
 
@@ -42,32 +59,29 @@ class SubscriptionController extends Controller
     {   
         $request->validate([
             'name' => 'required|min:5|max:80|unique:plans',
-            'cost' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:1|max:99.99',
+            'cost' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:1',
         ]);
 
-        $data = $request->except('_token');
+        $data = $request->all();
 
         $data['slug'] = strtolower($data['name']);
-        $price = $data['cost'] *100; 
+        $price = $data['cost'] * 100; 
 
-        //create stripe product
         $stripeProduct = $this->stripe->products->create([
             'name' => $data['name'],
         ]);
         
-        //Stripe Plan Creation
         $stripePlanCreation = $this->stripe->plans->create([
             'amount' => $price,
             'currency' => 'brl',
-            'interval' => 'month', //  it can be day,week,month or year
+            'interval' => 'month', 
             'product' => $stripeProduct->id,
         ]);
 
         $data['stripe_plan'] = $stripePlanCreation->id;
-        $data['user_id'] = Auth()->user()->id;
 
         Plan::create($data);
 
-        return back()->with('success_message', 'O plano ' . $request->name .' foi criado com sucesso.');
+        return back()->with('success_message', 'O plano foi criado com sucesso.');
     }
 }

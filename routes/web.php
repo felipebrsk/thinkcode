@@ -29,6 +29,12 @@ Route::middleware(['auth'])->group(function () {
     })->name('faq');
     Route::get('/courses/{id}', [App\Http\Controllers\CoursesController::class, 'courseContent'])->name('course.content');
     Route::post('/courses/bought', [App\Http\Controllers\CoursesController::class, 'courseBuy'])->name('course.buy');
+    Route::get('/plans', [App\Http\Controllers\PlanController::class, 'index'])->name('plans.index');
+    Route::get('/plan/{id}', [App\Http\Controllers\PlanController::class, 'show'])->name('plans.show');
+    Route::post('/subscription', [App\Http\Controllers\PlanController::class, 'create'])->name('subscription.create');
+
+    Route::get('create/plan', [App\Http\Controllers\SubscriptionController::class, 'createPlan'])->name('create.plan');
+    Route::post('store/plan', [App\Http\Controllers\SubscriptionController::class, 'storePlan'])->name('store.plan');
 });
 
 Route::group(['prefix' => 'admin'], function () {

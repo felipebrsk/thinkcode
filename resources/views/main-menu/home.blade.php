@@ -44,9 +44,19 @@
                         d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
             </a>
+            @if(auth()->user()->role_id === 1)
+                <a href="{{ route('plans.index') }}"
+                    class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                    <span class="sr-only">Plans Control</span>
+                    <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                </a>
+            @endif
         </nav>
         <div class="inline-flex items-center justify-center h-20 w-20 border-t border-gray-700">
-            <button class="p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+            <button class="p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg cursor-pointer focus:outline-none">
                 <span class="sr-only">Settings</span>
                 <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -235,23 +245,25 @@
                 </div>
                 <div class="overflow-y-auto" style="max-height: 24rem;">
                     <ul class="p-6 space-y-6">
-                        @foreach ($usersMedia as $userMedia)
-                            @if($userMedia->media > 9)
-                                <li class="flex items-center">
-                                    <div class="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
-                                        @if (isset($userMedia->user->profile_picture))
-                                            <img src="{{ asset('/profiles/' . $userMedia->user->profile_picture) }}"
-                                                alt="Profile picture">
-                                        @else
-                                            <img src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
-                                                alt="user profile photo">
-                                        @endif
-                                    </div>
-                                    <span class="text-gray-600">{{ $userMedia->user->username }}</span>
-                                    <span class="ml-auto font-semibold">{{ $userMedia->media }}</span>
-                                </li>
-                            @endif
-                        @endforeach
+                        @if(isset($usersMedia))
+                            @foreach ($usersMedia as $userMedia)
+                                @if($userMedia->media > 9)
+                                    <li class="flex items-center">
+                                        <div class="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
+                                            @if (isset($userMedia->user->profile_picture))
+                                                <img src="{{ asset('/profiles/' . $userMedia->user->profile_picture) }}"
+                                                    alt="Profile picture">
+                                            @else
+                                                <img src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
+                                                    alt="user profile photo">
+                                            @endif
+                                        </div>
+                                        <span class="text-gray-600">{{ $userMedia->user->username }}</span>
+                                        <span class="ml-auto font-semibold">{{ $userMedia->media }}</span>
+                                    </li>
+                                @endif
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>

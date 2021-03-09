@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 
 class User extends \TCG\Voyager\Models\User
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +45,10 @@ class User extends \TCG\Voyager\Models\User
     public function course()
     {
         return $this->belongsToMany('App\Models\Course', 'user_courses', 'user_id', 'course_id')->withPivot(['challenge', 'chapter', 'media']);
+    }
+
+    public function plan()
+    {
+        return $this->hasOne('App\Models\Plan');
     }
 }

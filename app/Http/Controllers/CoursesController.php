@@ -79,7 +79,7 @@ class CoursesController extends Controller
     public function courseContent($id)
     {
         $courseContent = Course::find($id);
-        $mediaGeral = DB::table('user_courses')->where('course_id','=', $courseContent->id)->select()->avg('media');
+        $mediaGeral = DB::table('user_courses')->where('course_id','=', $courseContent->id)->select()->avg('average');
         $users = DB::table('user_courses')->where('course_id','=', $courseContent->id)->select('id')->count();
 
         return view('courses.content')->with([

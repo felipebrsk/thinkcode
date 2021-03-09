@@ -30,16 +30,16 @@ class HomeController extends Controller
         $users = User::all();
 
         //Select the relationship
-        $usersMedia = UserCourse::with('user')->take(20)->orderByDesc('media')->get();
+        $usersMedia = UserCourse::with('user')->take(20)->orderByDesc('average')->get();
 
         //Select the average of media table
-        $media = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->select()->avg('media');
+        $media = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->select()->avg('average');
 
         //Select the columns that are below the average (of the user)
-        $count = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->where('media', '<', 5)->count();
+        $count = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->where('average', '<', 5)->count();
 
         //Select all the averages of the user
-        $geral = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->select('media')->count();
+        $geral = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->select('average')->count();
 
         //Calculate the percentage of courses below the average
         $percent = $count / $geral * 100;

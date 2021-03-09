@@ -17,10 +17,17 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
 
             $table->string('name', 80)->unique();
-            $table->integer('chapter');
-            $table->integer('challenges');
-            $table->string('chapter_name');
-            $table->decimal('total_average', 10,2);
+            $table->integer('chapters')->nullable();
+            $table->integer('challenges')->nullable();
+            $table->string('chapter_name', 80)->nullable();
+            $table->decimal('total_average', 10,2)->nullable();
+            $table->string('picture')->nullable();
+            $table->string('about_instructor')->nullable();
+            $table->string('about')->nullable();
+            $table->string('requirements')->nullable();
+            $table->string('learn')->nullable();
+            $table->string('features')->nullable();
+            $table->decimal('price', 10,2);
 
             $table->unsignedInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('CASCADE')->onUpdate('CASCADE');

@@ -284,7 +284,7 @@
                         <a href="#" class="">
                             <p class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                                 <span class="font-medium">
-                                    Assinar plano
+                                    <button id="checkout">Subscribe</button>
                                 </span>
                                 <span class="pl-2 material-icons align-middle text-sm">
                                     east

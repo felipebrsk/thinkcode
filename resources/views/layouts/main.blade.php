@@ -146,7 +146,7 @@
                     <div class="border-l pl-3 ml-3 space-x-1">
                         <div x-data="{ dropdownOpen: false }" class="relative my-32">
                             <button @click="dropdownOpen = !dropdownOpen"
-                                class="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
+                                class="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:bg-gray-100 focus:text-gray-600 rounded-full">
                                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor" stroke-linecap="round">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -235,6 +235,7 @@
         <livewire:scripts />
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        <script src="https://js.stripe.com/v3/"></script>
 
         <script>
             AOS.init();

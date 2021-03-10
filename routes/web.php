@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('faq');
     Route::get('/courses/{id}', [App\Http\Controllers\CoursesController::class, 'courseContent'])->name('course.content');
     Route::post('/courses/bought', [App\Http\Controllers\CoursesController::class, 'courseBuy'])->name('course.buy');
-    Route::get('/plans', [App\Http\Controllers\PlanController::class, 'index'])->name('plans.index');
+    Route::post('/courses/require', [App\Http\Controllers\CoursesController::class, 'courseRequire'])->name('course.require');
     Route::get('/plan/{id}', [App\Http\Controllers\PlanController::class, 'show'])->name('plans.show');
     Route::post('/subscription', [App\Http\Controllers\SubscriptionController::class, 'create'])->name('subscription.create');
 

@@ -93,6 +93,11 @@ class CoursesController extends Controller
 
     public function courseBuy(Request $request)
     {
+        //
+    }
+
+    public function courseRequire(Request $request)
+    {
         $usuario = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->where('course_id', '=', $request->course_id)->count();
 
         if($usuario > 0){

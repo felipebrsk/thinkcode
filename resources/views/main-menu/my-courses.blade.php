@@ -45,7 +45,7 @@
                 </svg>
             </a>
             @if(auth()->user()->role_id === 1)
-                <a href="{{ route('plans.index') }}"
+                <a href="{{ route('create.plan') }}"
                     class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Plans Control</span>
                     <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"

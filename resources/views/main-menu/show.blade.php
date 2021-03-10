@@ -45,7 +45,7 @@
                 </svg>
             </a>
             @if(auth()->user()->role_id === 1)
-                <a href="{{ route('plans.index') }}"
+                <a href="{{ route('create.plan') }}"
                     class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Plans Control</span>
                     <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -340,6 +340,16 @@
                 class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-green-600 rounded-md bg-green-500 hover:bg-green-400">Comprar</button>
         </form>
     </div>
+    @else
+        {{-- Require course (subs option) --}}
+        <div class="justify-center flex mt-12">
+            <form action="{{ route('course.require', $findCourse->id) }}" method="post">
+                @csrf
+                <input type="hidden" name="course_id" id="course_id" value="{{ $findCourse->id }}">
+                <button type="submit"
+                    class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-green-600 rounded-md bg-green-500 hover:bg-green-400">Adicionar</button>
+            </form>
+        </div>
     @endif
 
     {{-- Error --}}

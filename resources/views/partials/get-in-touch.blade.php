@@ -33,7 +33,7 @@
 	</div>
 </div>
 <button class="floating-btn">
-	Entrar em contato
+	Entrar em contato <i class="fas fa-address-book ml-1"></i>
 </button>
 
 <script>

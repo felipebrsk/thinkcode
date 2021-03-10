@@ -44,7 +44,10 @@
                             class="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
                             <span class="sr-only">User Menu</span>
                             <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
-                                <span class="font-semibold">{{ Auth::user()->username }}</span>
+                                <span class="font-semibold">{{ Auth::user()->username }}
+                                    @if(Auth::user()->is_subscribed == 1)
+                                        <i class="fas fa-star"></i>
+                                    @endif</span>
                                 <span class="text-sm text-gray-600">{{ Auth::user()->job }}</span>
                             </div>
                             <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">

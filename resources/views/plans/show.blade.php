@@ -44,13 +44,14 @@
                         d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
             </a>
-            @if(auth()->user()->role_id === 1)
-                <a href="{{ route('plans.index') }}"
+            @if (auth()->user()->role_id === 1)
+                <a href="{{ route('create.plan') }}"
                     class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
                     <span class="sr-only">Plans Control</span>
                     <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
                 </a>
             @endif
@@ -70,19 +71,21 @@
 </aside>
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('sass/_buttons.scss.css') }}">
-    <div class="text-center">
+    <link rel="stylesheet" href="{{ asset('sass/_buttons.scss.css') }}">
+    <div class="text-center mt-4">
         <p>Serão cobrados R${{ number_format($plan->cost, 2) }} pelo {{ $plan->name }}.</p>
         <p>O plano é recorrente, ou seja, a cada {{ $plan->time }} o valor será debitado no cartão informado.</p>
     </div>
     <div class="leading-loose flex justify-center card">
-        <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl" action="{{ route('subscription.create') }}" method="post" id="payment-form">
+        <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl" action="{{ route('subscription.create') }}"
+            method="post" id="payment-form">
             @csrf
-            <p class="text-gray-800 font-medium">Customer information</p>
+            <p class="text-gray-800 font-medium">Informações do comprador</p>
             <div class>
                 <label class="block text-sm text-gray-00" for="cus_name">Nome</label>
-                <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded focus:outline-none" id="cus_name" name="name" type="text"
-                    required placeholder="Seu nome" aria-label="Name" value="{{ Auth()->user()->username }}">
+                <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded focus:outline-none" id="cus_name"
+                    name="name" type="text" required placeholder="Seu nome" aria-label="Name"
+                    value="{{ Auth()->user()->username }}">
             </div>
             <div class="mt-2">
                 <label class="block text-sm text-gray-600" for="cus_email">Email</label>
@@ -96,8 +99,8 @@
             </div>
             <div class="mt-2">
                 <label class="text-sm block text-gray-600" for="cus_email">Cidade</label>
-                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded focus:outline-none" name="city"
-                    type="text" required placeholder="Cidade" aria-label="Email">
+                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded focus:outline-none" name="city" type="text"
+                    required placeholder="Cidade" aria-label="Email">
             </div>
             <div class="inline-block mt-2 w-1/2 pr-1">
                 <label class="block text-sm text-gray-600" for="cus_email">País</label>
@@ -106,8 +109,8 @@
             </div>
             <div class="inline-block mt-2 -mx-1 pl-1 w-1/2">
                 <label class="block text-sm text-gray-600" for="cus_email">CEP</label>
-                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded focus:outline-none" maxlength="11" name="CEP"
-                    type="text" required placeholder="CEP" aria-label="Email">
+                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded focus:outline-none" maxlength="11"
+                    name="CEP" type="text" required placeholder="CEP" aria-label="Email">
             </div>
             <p class="mt-4 text-gray-800 font-medium">Informações de pagamento</p>
             <div class="mt-4">
@@ -127,8 +130,9 @@
                     <input type="hidden" name="amount" value="{{ $plan->cost }}">
                 </div>
                 <div class="card-footer mt-6">
-                    <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded card-disable" type="submit" id="card-button"
-                    data-secret="{{ $intent->client_secret }}">R${{$plan->cost}}</button>
+                    <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded card-disable"
+                        type="submit" id="card-button"
+                        data-secret="{{ $intent->client_secret }}">R${{ $plan->cost }}</button>
                 </div>
             </div>
         </form>
@@ -140,7 +144,7 @@
         // (Note that this demo uses a wider set of styles than the guide below.)
         var style = {
             base: {
-                color: 'rgba(55, 65, 81, var(--tw-text-opacity))',
+                color: '#32325d',
                 lineHeight: '18px',
                 fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
                 fontSmoothing: 'antialiased',
@@ -155,8 +159,8 @@
             }
         };
 
-        const stripe = Stripe('{{ env('STRIPE_KEY') }}', {
-            locale: 'en'
+        const stripe = Stripe('{{ env("STRIPE_KEY") }}', {
+            locale: 'pt-BR'
         }); // Create a Stripe client.
         const elements = stripe.elements(); // Create an instance of Elements.
         const cardElement = elements.create('card', {
@@ -183,8 +187,6 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            document.getElementById('card-button').disabled = true;
-
             stripe
                 .handleCardSetup(clientSecret, cardElement, {
                     payment_method_data: {
@@ -197,8 +199,6 @@
                         // Inform the user if there was an error.
                         var errorElement = document.getElementById('card-errors');
                         errorElement.textContent = result.error.message;
-
-                        document.getElementById('card-button').disabled = false;
                     } else {
                         console.log(result);
                         // Send the token to your server.

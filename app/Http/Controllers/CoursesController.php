@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Course;
+use App\Models\Payment;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use App\Models\Plan;
@@ -91,9 +92,51 @@ class CoursesController extends Controller
         ]);
     }
 
-    public function courseBuy(Request $request)
+    public function courseBuy($id)
     {
-        //
+        $buy = Course::find($id);
+
+        return view('checkout', compact('buy'));
+    }
+
+    public function courseStore(Request $request, $id)
+    {
+        
+        try {
+            \Stripe::charges()->create([
+                'amount' => $this->getNumbers()->get('newTotal'),
+                'currency' => 'BRL',
+                'source' => $request->stripeToken,
+                'description' => 'Order',
+                'receipt_email' => $request->email,
+                'metadata' => [
+                    'Produtos' => $request->course_name,
+                    'Quantidade' => \Cart::instance('default')->count(),
+                    'Desconto' => collect(session()->get('cupom'))->toJson()
+                ],
+            ]);
+            
+            $this->addBoughtToPaymentsTable($request, null);
+            
+            $this->decreaseQuantity();
+            session()->forget('cupom');
+            
+            
+            
+            return redirect()->back()->with('success_message', 'Obrigado! Seu pagamento foi aceito com sucesso.');
+        } catch (CardErrorException $e) {
+            $this->addToPedidosTables($request, $e->getMessage());
+            return back()->withErrors('Ops! ' . $e->getMessage());
+        } catch (MissingParameterException $e){
+            return back()->withErrors('Ops! ' . $e->getMessage());
+        }
+    }
+
+    protected function addBoughtToPaymentsTable()
+    {
+        $courseBought = Payment::create([
+            
+        ]);
     }
 
     public function courseRequire(Request $request)

@@ -32,6 +32,18 @@ class SubscriptionController extends Controller
         
         $setSub = $request->user();
         $setSub->update(['is_subscribed' => $setSub->is_subscribed = 1]);
+
+        //Validates
+        $request->validate([
+            'plan_name' => 'required|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'amount' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'CEP' => 'required',
+        ]);
         
         //Insert into payments table
         $payment = new Payment;

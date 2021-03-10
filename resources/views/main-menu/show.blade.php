@@ -333,12 +333,8 @@
 
     {{-- Buy course --}}
     <div class="justify-center flex mt-12">
-        <form action="{{ route('course.buy', $findCourse->id) }}" method="post">
-            @csrf
-            <input type="hidden" name="course_id" id="course_id" value="{{ $findCourse->id }}">
-            <button type="submit"
-                class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-green-600 rounded-md bg-green-500 hover:bg-green-400">Comprar</button>
-        </form>
+        <a href="{{ route('course.buy', $findCourse->id) }}"
+            class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-green-600 rounded-md bg-green-500 hover:bg-green-400">Comprar</a>
     </div>
     @else
         {{-- Require course (subs option) --}}

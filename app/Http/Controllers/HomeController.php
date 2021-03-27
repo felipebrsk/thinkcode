@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,14 +76,8 @@ class HomeController extends Controller
         return view('profile.edit-profile', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(UserUpdateRequest $request)
     {
-        $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.auth()->id()],
-            'password' => ['sometimes','nullable', 'string', 'min:8', 'confirmed'],
-        ]);
-
         $user = auth()->user();
         $input = $request->except('password', 'password_confirmation', 'profile_picture');
         

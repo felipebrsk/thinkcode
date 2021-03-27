@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubscriptionCreateRequest;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\Plan;
@@ -16,7 +17,7 @@ class SubscriptionController extends Controller
         $this->stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
     }
 
-    public function create(Request $request, Plan $plan)
+    public function create(SubscriptionCreateRequest $request, Plan $plan)
     {
         $plan = Plan::findOrFail($request->get('plan'));
         
@@ -32,18 +33,6 @@ class SubscriptionController extends Controller
         
         $setSub = $request->user();
         $setSub->update(['is_subscribed' => $setSub->is_subscribed = 1]);
-
-        //Validates
-        $request->validate([
-            'plan_name' => 'required|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'amount' => 'required',
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'country' => 'required',
-            'CEP' => 'required',
-        ]);
         
         //Insert into payments table
         $payment = new Payment;

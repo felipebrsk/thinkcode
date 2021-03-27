@@ -10,6 +10,8 @@ use App\Models\Payment;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use App\Models\Plan;
+use Cartalyst\Stripe\Exception\CardErrorException;
+use Cartalyst\Stripe\Exception\MissingParameterException;
 
 class CoursesController extends Controller
 {
@@ -79,64 +81,104 @@ class CoursesController extends Controller
         return view('main-menu.show', compact('findCourse', 'plans'));
     }
 
-    public function courseContent($id)
+    public function courseInfo($id)
     {
-        $courseContent = Course::find($id);
-        $mediaGeral = DB::table('user_courses')->where('course_id','=', $courseContent->id)->select()->avg('average');
-        $users = DB::table('user_courses')->where('course_id','=', $courseContent->id)->select('id')->count();
+        $courseInfo = Course::find($id);
+        
+        //Select average from each user
+        $mediaGeral = DB::table('user_courses')->where('course_id','=', $courseInfo->id)->select()->avg('average');
 
-        return view('courses.content')->with([
-            'course' => $courseContent,
+        //Select how many users are in each course
+        $users = DB::table('user_courses')->where('course_id','=', $courseInfo->id)->select('id')->count();
+
+        return view('courses.info')->with([
+            'course' => $courseInfo,
             'mediaGeral' => $mediaGeral,
             'users' => $users,
         ]);
     }
 
-    public function courseBuy($id)
+    public function courseContent($id)
+    {
+        $courseContent = Course::find($id);
+        $content = DB::table('contents')->where('course_id', $id)->get();
+
+        return view('courses.content')->with([
+            'course' => $courseContent,
+            'content' => $content,
+        ]);
+    }
+
+    public function courseBuy(Request $request, $id)
     {
         $buy = Course::find($id);
 
-        return view('checkout', compact('buy'));
+        //Check if the user_id and course_id exists
+        $usuario = DB::table('user_courses')->where('user_id', '=', Auth::user()->id)->where('course_id', '=', $buy->id)->count();
+
+        $intent = $request->user()->createSetupIntent();
+
+        if ($usuario > 0){
+            return back()->withErrors('Você já está cadastrado nesse curso!');
+        }else{
+            return view('checkout', compact('buy', 'intent'));
+        }
     }
 
-    public function courseStore(Request $request, $id)
+    /**
+     *  Initiate the charge with Stripe and call the protected function to store the informations into Payments Table
+     * 
+     *  @return \Illuminate\Http\Response
+     */
+    public function courseStore(Request $request)
     {
-        
+        //Create Stripe charge
         try {
             \Stripe::charges()->create([
-                'amount' => $this->getNumbers()->get('newTotal'),
+                'amount' => $request->price,
                 'currency' => 'BRL',
                 'source' => $request->stripeToken,
                 'description' => 'Order',
                 'receipt_email' => $request->email,
                 'metadata' => [
-                    'Produtos' => $request->course_name,
-                    'Quantidade' => \Cart::instance('default')->count(),
+                    'Produtos' => $request->name,
+                    'Quantidade' => 1,
                     'Desconto' => collect(session()->get('cupom'))->toJson()
                 ],
             ]);
             
+            //Call addBoughtToPaymentsTable protected function to store informations into Payments table
             $this->addBoughtToPaymentsTable($request, null);
             
-            $this->decreaseQuantity();
+            //Forget de coupon in session
             session()->forget('cupom');
             
-            
-            
+            //If success, return back with the success message
             return redirect()->back()->with('success_message', 'Obrigado! Seu pagamento foi aceito com sucesso.');
+
+            //if there is an error with the card, save into Payments table with the error. If there is any parameter error, return back with the error
         } catch (CardErrorException $e) {
-            $this->addToPedidosTables($request, $e->getMessage());
+            $this->addBoughtToPaymentsTable($request, $e->getMessage());
             return back()->withErrors('Ops! ' . $e->getMessage());
         } catch (MissingParameterException $e){
             return back()->withErrors('Ops! ' . $e->getMessage());
         }
     }
 
-    protected function addBoughtToPaymentsTable()
+    /**
+     *  Protected function to store the infotmations into Payments Table
+     *  
+     *  @param 
+     * 
+     *  @return \Illuminate\Http\Response
+     */
+    protected function addBoughtToPaymentsTable($request, $error)
     {
         $courseBought = Payment::create([
-            
+            'error' => $error,
         ]);
+
+        return $courseBought;
     }
 
     public function courseRequire(Request $request)

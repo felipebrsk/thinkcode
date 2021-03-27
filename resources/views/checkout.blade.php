@@ -21,7 +21,6 @@
                     value="{{ $buy }}" required>
                 <div class="form-group">
                     <label for="email">Endereço de e-mail*</label>
-                    <label for="username">Nome de usuário*</label>
                     @if (Auth::user())
                         <input type="email" class="form-control" id="email" name="email"
                             value="{{ Auth::user()->email }}" readonly>
@@ -88,7 +87,8 @@
                 </div>
                 <div class="spacer"></div>
 
-                <button type="submit" id="complete-order" class="button-primary full-width">Finalizar
+                <button type="submit" id="card-button"
+                data-secret="{{ $intent->client_secret }}" class="button-primary full-width card-disable">Finalizar
                     pedido</button>
 
 
@@ -112,9 +112,6 @@
                             <div class="checkout-table-row-right">
                                 <div class="checkout-table-quantity">1</div>
                             </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="tax" name="tax" value="">
-                            </div>
                         </div> <!-- end checkout-table-row -->
     
                 </div> <!-- end checkout-table -->
@@ -122,7 +119,7 @@
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
                         Subtotal: <br>
-                        Conditional coupon
+                        Conditional coupon: 
                     </div>
     
                     <div class="checkout-totals-right">

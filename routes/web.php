@@ -27,7 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('FAQ', function(){
         return view('FAQ');
     })->name('faq');
-    Route::get('/courses/{id}', [App\Http\Controllers\CoursesController::class, 'courseContent'])->name('course.content');
+    Route::get('/course/content/{id}', [App\Http\Controllers\CoursesController::class, 'courseContent'])->name('course.content');
+    Route::get('/courses/{id}', [App\Http\Controllers\CoursesController::class, 'courseInfo'])->name('course.info');
     Route::get('/courses/buy/{id}', [App\Http\Controllers\CoursesController::class, 'courseBuy'])->name('course.buy');
     Route::post('/courses/bought', [App\Http\Controllers\CoursesController::class, 'courseStore'])->name('course.bought');
     Route::post('/courses/require', [App\Http\Controllers\CoursesController::class, 'courseRequire'])->name('course.require');
